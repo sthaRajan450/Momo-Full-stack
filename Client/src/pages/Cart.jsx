@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartProvider";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -10,6 +10,32 @@ const Cart = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const orderNow = async () => {
+    const product = state.cartItems.map((product) => {
+      return { product_id: product._id, quantity: product.quantity };
+    });
+    try {
+      let response = await fetch(
+        "http://localhost:3000/api/orders/createOrder",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(product),
+        }
+      );
+      if (response.ok) {
+        response = await response.json();
+        console.log(response);
+        alert(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
@@ -81,7 +107,12 @@ const Cart = () => {
               </div>
             ))}
             <div className="flex justify-center items-center">
-              <NavLink className="bg-blue-500 rounded-lg p-2 text-white" to='/menu'>Continue shoping</NavLink>
+              <NavLink
+                className="bg-blue-500 rounded-lg p-2 text-white"
+                to="/menu"
+              >
+                Continue shoping
+              </NavLink>
             </div>
           </div>
 
@@ -96,10 +127,10 @@ const Cart = () => {
             <button
               className="p-3 bg-green-600 text-white rounded-2xl cursor-pointer"
               onClick={() => {
-                navigate("/payment");
+                orderNow();
               }}
             >
-              Procceed Payment
+              Order Now
             </button>
           </div>
         </div>
@@ -107,8 +138,13 @@ const Cart = () => {
         <div className="text-center text-gray-600 mt-10">
           No products in cart.
           <div className="flex justify-center items-center">
-              <NavLink className="bg-orange-500 rounded-lg p-2 text-white mt-4" to='/menu'>Shop Now</NavLink>
-            </div>
+            <NavLink
+              className="bg-orange-500 rounded-lg p-2 text-white mt-4"
+              to="/menu"
+            >
+              Shop Now
+            </NavLink>
+          </div>
         </div>
       )}
     </div>

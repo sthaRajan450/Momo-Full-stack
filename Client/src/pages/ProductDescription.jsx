@@ -28,7 +28,7 @@ const ProductDescription = () => {
       <div className="bg-white shadow-2xl rounded-3xl overflow-hidden w-full max-w-6xl flex flex-col md:flex-row">
         <div className="w-full md:w-1/2 bg-gray-100 flex items-center justify-center">
           <img
-            src={`http://localhost:3000/image/${product.image}`}
+            src={`http://localhost:9000/image/${product.image}`}
             alt={product.title}
             className="object-cover h-full max-h-[500px] w-full rounded-l-3xl"
           />

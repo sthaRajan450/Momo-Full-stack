@@ -21,7 +21,7 @@ const AddProductForm = () => {
 
     try {
       let response = await fetch(
-        "http://localhost:3000/api/products/createProduct",
+        "http://localhost:9000/api/products/createProduct",
         {
           method: "POST",
           body: formData,

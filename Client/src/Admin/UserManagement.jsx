@@ -6,7 +6,7 @@ const UserManagement = () => {
 
   const getAllUsers = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/users/", {
+      const response = await fetch("http://localhost:9000/api/users/", {
         method: "GET",
         credentials: "include",
       });

@@ -9,7 +9,7 @@ const Menu = () => {
   const getAllProducts = async () => {
     try {
       let response = await fetch(
-        "http://localhost:3000/api/products/getAllProducts",
+        "http://localhost:9000/api/products/getAllProducts",
         {
           method: "GET",
         }
@@ -54,7 +54,7 @@ const Menu = () => {
               className="bg-white rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 border border-gray-100"
             >
               <img
-                src={`http://localhost:3000/image/${product.image}`}
+                src={`http://localhost:9000/image/${product.image}`}
                 alt={product.title}
                 className="w-full h-64 object-cover rounded-t-xl"
               />

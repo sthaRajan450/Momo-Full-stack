@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const getUser = async () => {
     try {
       let response = await fetch(
-        "http://localhost:3000/api/users/getSingleUser",
+        "http://localhost:9000/api/users/getSingleUser",
         {
           method: "GET",
           credentials: "include",

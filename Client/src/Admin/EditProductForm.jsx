@@ -13,7 +13,7 @@ const EditProductForm = () => {
   const fetchProduct = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/products/getSingleProduct/${id}`,
+        `http://localhost:9000/api/products/getSingleProduct/${id}`,
         { method: "GET" }
       );
       if (response.ok) {
@@ -42,7 +42,7 @@ const EditProductForm = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3000/api/products/update/${id}`,
+        `http://localhost:9000/api/products/update/${id}`,
         {
           method: "PUT",
           headers: {

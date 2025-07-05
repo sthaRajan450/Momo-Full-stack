@@ -17,7 +17,7 @@ const Cart = () => {
     });
     try {
       let response = await fetch(
-        "http://localhost:3000/api/orders/createOrder",
+        "http://localhost:9000/api/orders/createOrder",
         {
           method: "POST",
           headers: {
@@ -61,7 +61,7 @@ const Cart = () => {
                 <div className="flex items-center space-x-4">
                   <img
                     className="w-24 h-24 object-cover rounded-md"
-                    src={`http://localhost:3000/image/${product.image}`}
+                    src={`http://localhost:9000/image/${product.image}`}
                     alt={product.title}
                   />
                   <div>

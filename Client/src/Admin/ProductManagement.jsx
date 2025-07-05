@@ -7,7 +7,7 @@ const ProductManagement = () => {
   const getAllProducts = async () => {
     try {
       let response = await fetch(
-        "http://localhost:3000/api/products/getAllProducts",
+        "http://localhost:9000/api/products/getAllProducts",
         {
           method: "GET",
         }
@@ -25,7 +25,7 @@ const ProductManagement = () => {
 
   const removeProduct = async (id) => {
     try {
-      let response = await fetch(`http://localhost:3000/api/products/delete/${id}`, {
+      let response = await fetch(`http://localhost:9000/api/products/delete/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -65,7 +65,7 @@ const ProductManagement = () => {
               className="bg-white w-80 rounded-xl shadow-md hover:shadow-xl transition duration-300 transform hover:scale-105 border border-gray-100"
             >
               <img
-                src={`http://localhost:3000/image/${product.image}`}
+                src={`http://localhost:9000/image/${product.image}`}
                 alt={product.title}
                 className="w-full h-56 object-cover rounded-t-xl"
               />

@@ -23,6 +23,6 @@ app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/image", express.static("public/image"));
 
-app.listen(3000, () => {
-  console.log(`server at http://localhost:3000`);
+app.listen(9000, () => {
+  console.log(`server at http://localhost:9000`);
 });

@@ -14,7 +14,6 @@ const createOrder = async (req, res) => {
       });
     }
 
- 
     const isExist = await User.findById(userId);
     if (!isExist) {
       return res
@@ -45,4 +44,61 @@ const createOrder = async (req, res) => {
   }
 };
 
-module.exports = { createOrder };
+const success = async (req, res) => {
+  let data = req.query.data;
+  data = JSON.parse(atob(data));
+  console.log(data.transaction_uuid);
+
+  let isFoundOrder = await Order.findOne({ _id: data.transaction_uuid });
+
+  if (!isFoundOrder) {
+    return res
+      .status(404)
+      .json({ status: 400, success: false, message: "Order not found" });
+  }
+  let response = await Order.findByIdAndUpdate(
+    data.transaction_uuid,
+    { paymentStatus: data.status },
+    { new: true }
+  );
+  res.redirect(`http://localhost:5173/success/${data.transaction_uuid}`);
+  // res.status(200).json({
+  //   status: 200,
+  //   success: true,
+  //   message: "Order status updated or payment completed",
+  //   data: response,
+  // });
+};
+
+const getorder = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        status: 404,
+        success: false,  
+        message: "Order is not found"
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      data: order,
+      message: "Order is found"
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      status: 500,
+      success: false,
+      message: "Something went wrong",
+      error: error.message
+    });
+  }
+};
+
+module.exports = { createOrder, success, getorder };

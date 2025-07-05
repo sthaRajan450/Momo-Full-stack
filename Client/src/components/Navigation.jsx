@@ -7,7 +7,7 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const logout = async () => {
-    let response = await fetch("http://localhost:3000/api/users/logout", {
+    let response = await fetch("http://localhost:9000/api/users/logout", {
       method: "POST",
       credentials: "include",
     });

@@ -16,7 +16,9 @@ import AddProductForm from "./Admin/AddProductForm";
 import ProductDescription from "./pages/ProductDescription";
 import EditProductForm from "./Admin/EditProductForm";
 import Cart from "./pages/Cart";
-import Payment from "./pages/Payment";
+import Payment from "./payment/Payment";
+import Success from "./payment/Success";
+
 const App = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -31,7 +33,8 @@ const App = () => {
         <Route path="/productDescription" element={<ProductDescription />} />
         <Route path="/cart" element={<ProtectedRoutes compo={<Cart />} />} />
         <Route path="/addProduct" element={<AddProductForm />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment" element={<Payment/>} />
+        <Route path="/success/:id" element={<Success/>} />
         <Route path="/editProduct/:id" element={<EditProductForm />} />
         <Route path="*" element={<PageNotFound />} />
 

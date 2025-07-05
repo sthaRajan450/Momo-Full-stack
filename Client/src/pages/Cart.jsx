@@ -31,6 +31,8 @@ const Cart = () => {
         response = await response.json();
         console.log(response);
         alert(response.message);
+        let order_id = response.data._id;
+        navigate("/payment", { state: { order_id, totalAmount } });
       }
     } catch (error) {
       console.log(error);

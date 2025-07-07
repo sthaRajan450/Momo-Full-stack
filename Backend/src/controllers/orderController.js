@@ -79,8 +79,8 @@ const getorder = async (req, res) => {
     if (!order) {
       return res.status(404).json({
         status: 404,
-        success: false,  
-        message: "Order is not found"
+        success: false,
+        message: "Order is not found",
       });
     }
 
@@ -88,7 +88,7 @@ const getorder = async (req, res) => {
       status: 200,
       success: true,
       data: order,
-      message: "Order is found"
+      message: "Order is found",
     });
   } catch (error) {
     console.error(error);
@@ -96,9 +96,41 @@ const getorder = async (req, res) => {
       status: 500,
       success: false,
       message: "Something went wrong",
-      error: error.message
+      error: error.message,
     });
   }
 };
 
-module.exports = { createOrder, success, getorder };
+const getOrderHistory = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+
+    const orderInfo = await Order.find({ user_id: userId }).populate("product.product_id");
+  
+
+    if (orderInfo.length === 0) {
+      return res.status(404).json({
+        status: 404,
+        success: false,
+        message: "No orders found for this user",
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      data: orderInfo,
+      message: "User order history fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching order history:", error);
+    res.status(500).json({
+      status: 500,
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+module.exports = { createOrder, success, getorder, getOrderHistory };

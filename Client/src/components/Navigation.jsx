@@ -38,6 +38,14 @@ const Navigation = () => {
             Home
           </NavLink>
           <NavLink
+            to="/orderHistory"
+            className={({ isActive }) =>
+              isActive ? `${activeLinkStyle}` : `${linkStyle}`
+            }
+          >
+            OrderHistory
+          </NavLink>
+          <NavLink
             to="/menu"
             className={({ isActive }) =>
               isActive ? `${activeLinkStyle}` : `${linkStyle}`
@@ -62,8 +70,8 @@ const Navigation = () => {
             >
               Admin
             </NavLink>
-          )}  
-          
+          )}
+
           <NavLink
             to="/cart"
             className={({ isActive }) =>

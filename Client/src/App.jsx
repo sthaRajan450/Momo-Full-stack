@@ -18,6 +18,7 @@ import EditProductForm from "./Admin/EditProductForm";
 import Cart from "./pages/Cart";
 import Payment from "./payment/Payment";
 import Success from "./payment/Success";
+import OrderHistory from "./pages/OrderHistory";
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/cart" element={<ProtectedRoutes compo={<Cart />} />} />
         <Route path="/addProduct" element={<AddProductForm />} />
         <Route path="/payment" element={<Payment/>} />
+        <Route path="/orderHistory" element={<OrderHistory/>} />
         <Route path="/success/:id" element={<Success/>} />
         <Route path="/editProduct/:id" element={<EditProductForm />} />
         <Route path="*" element={<PageNotFound />} />

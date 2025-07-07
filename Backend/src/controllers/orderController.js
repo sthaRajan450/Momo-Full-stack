@@ -104,11 +104,14 @@ const getorder = async (req, res) => {
 const getOrderHistory = async (req, res) => {
   try {
     const userId = req.user.id;
+    // console.log(req.user)
 
-
-    const orderInfo = await Order.find({ user_id: userId }).populate("product.product_id");
-  
-
+    const orderInfo = await Order.find({ user_id: userId })
+      .populate("product.product_id")
+      .populate({
+        path: "user_id",
+        select: "-password",
+      });
     if (orderInfo.length === 0) {
       return res.status(404).json({
         status: 404,

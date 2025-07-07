@@ -19,6 +19,8 @@ import Cart from "./pages/Cart";
 import Payment from "./payment/Payment";
 import Success from "./payment/Success";
 import OrderHistory from "./pages/OrderHistory";
+import OrderManagement from "./Admin/OrderManagement";
+import EditUser from "./Admin/EditUser";
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -38,6 +40,7 @@ const App = () => {
         <Route path="/orderHistory" element={<OrderHistory/>} />
         <Route path="/success/:id" element={<Success/>} />
         <Route path="/editProduct/:id" element={<EditProductForm />} />
+        <Route path="/editUser/:id" element={<EditUser />} />
         <Route path="*" element={<PageNotFound />} />
 
         {user?.role == "admin" && (
@@ -45,6 +48,7 @@ const App = () => {
             <Route path="userManagement" element={<UserManagement />} />
             <Route index element={<UserManagement />} />
             <Route path="productManagement/" element={<ProductManagement />} />
+            <Route path="orderManagement/" element={<OrderManagement />} />
           </Route>
         )}
       </Routes>

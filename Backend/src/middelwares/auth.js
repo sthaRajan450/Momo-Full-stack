@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const verifyToken = async (req, res, next) => {
+
+const verifyToken = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
     return res.status(401).json({
@@ -8,10 +9,16 @@ const verifyToken = async (req, res, next) => {
       message: "Unauthorized — No token found",
     });
   }
+
   try {
     const decoded = jwt.verify(token, "123456789");
-    
-    req.user = decoded;
+ 
+
+    req.user = {
+      id: decoded.id,
+      role: decoded.role,
+    };
+
     next();
   } catch (error) {
     return res.status(401).json({

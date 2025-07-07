@@ -38,7 +38,7 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    const token = generateToken(newUser._id);
+    const token = generateToken(newUser._id, newUser.role);
 
     res
       .cookie("token", token, {
@@ -101,7 +101,7 @@ const loginUser = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = generateToken(isExist._id);
+    const token = generateToken(isExist._id, isExist.role);
 
     res.cookie("token", token, {
       httpOnly: true, // can't access cookie via client-side JS
@@ -150,9 +150,17 @@ const getAllUsers = async (req, res) => {
 
 const getSingleUser = async (req, res) => {
   try {
-    const { id } = req.user;
+    const userId = req.params.id || req.user?.id;
 
-    const user = await User.findById(id).select("-password");
+    if (!userId) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: "User ID is required.",
+      });
+    }
+
+    const user = await User.findById(userId).select("-password");
 
     if (!user) {
       return res.status(404).json({
@@ -178,6 +186,80 @@ const getSingleUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { name, email, password, role } = req.body;
+
+    const updateData = {};
+
+    if (name) updateData.name = name;
+    if (email) updateData.email = email;
+    if (role) updateData.role = role;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateData.password = hashedPassword;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        status: 404,
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "User updated successfully",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.error("User update Error:", error);
+    res.status(500).json({
+      status: 500,
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+const removeUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({
+        status: 404,
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: "User removed successfully",
+    });
+  } catch (error) {
+    console.error("Cannot remove user:", error);
+    return res.status(500).json({
+      status: 500,
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
 const logoutUser = (req, res) => {
   res
     .clearCookie("token")
@@ -190,4 +272,6 @@ module.exports = {
   getAllUsers,
   getSingleUser,
   logoutUser,
+  updateUser,
+  removeUser,
 };

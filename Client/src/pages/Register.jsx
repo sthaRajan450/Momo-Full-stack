@@ -42,7 +42,7 @@ const Register = () => {
       setPhone("");
       setIsAuth(true);
       setUser(response.data)
-      // navigate("/login");
+      navigate("/");
     } else {
       alert("Error Occured!");
     }

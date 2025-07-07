@@ -55,12 +55,17 @@ const ProductDescription = () => {
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold shadow-lg transition duration-300 transform hover:scale-105"
               onClick={() => {
                 dispatch({ type: "add", payload: product });
-                // navigate("/cart");
               }}
             >
               Add To Cart
             </button>
-            <button className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg transition duration-300 transform hover:scale-105">
+            <button
+              onClick={() => {
+                dispatch({ type: "add", payload: product });
+                navigate("/cart");
+              }}
+              className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg transition duration-300 transform hover:scale-105"
+            >
               Buy Now
             </button>
           </div>

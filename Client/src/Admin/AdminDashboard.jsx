@@ -27,6 +27,16 @@ const AdminDashboard = () => {
           >
             👥 User Management
           </NavLink>
+          <NavLink
+            to="orderManagement"
+            className={({ isActive }) =>
+              `py-2 px-4 rounded hover:bg-gray-700 transition ${
+                isActive ? "bg-gray-700" : ""
+              }`
+            }
+          >
+            🚚 Order Management
+          </NavLink>
         </nav>
       </aside>
 
